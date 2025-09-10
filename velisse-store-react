@@ -1,0 +1,148 @@
+{
+  "name": "velisse-store-react",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^4.4.0"
+  }
+}import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+});<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Velisse Store</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);import { useState } from "react";
+import products from "./products.json";
+import "./styles.css";
+
+function App() {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  return (
+    <div>
+      <header className="header">
+        <h1>Velisse</h1>
+        <p>Luxury & Timeless Fashion</p>
+      </header>
+
+      <section id="products" className="grid">
+        {products.map((p) => (
+          <div key={p.id} className="card">
+            <img src={p.image} alt={p.name} />
+            <h2>{p.name}</h2>
+            <p>{p.price}</p>
+            <button onClick={() => addToCart(p)}>Add to Cart</button>
+          </div>
+        ))}
+      </section>
+
+      <footer className="footer">
+        <h3>🛒 Cart ({cart.length})</h3>
+      </footer>
+    </div>
+  );
+}
+
+export default App;[
+  {
+    "id": 1,
+    "name": "Velisse Silk Dress",
+    "price": "₦45,000",
+    "image": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 2,
+    "name": "Velisse Leather Handbag",
+    "price": "₦30,000",
+    "image": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 3,
+    "name": "Velisse Gold Earrings",
+    "price": "₦18,000",
+    "image": "https://via.placeholder.com/200"
+  }
+]body {
+  font-family: "Georgia", serif;
+  margin: 0;
+  padding: 0;
+  background: #d7c5a3;
+  color: #5b0e16;
+}
+
+.header {
+  text-align: center;
+  padding: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+button {
+  background: #5b0e16;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: #5b0e16;
+  color: #fff;
+}
